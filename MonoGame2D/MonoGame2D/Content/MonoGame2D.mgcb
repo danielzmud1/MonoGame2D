@@ -46,3 +46,17 @@
 /processorParam:TextureFormat=Color
 /build:Menu/ButtonPlay.png
 
+#begin Tiles/A_Block1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:Tiles/A_Block1.png
+
+#begin Levels/A_level1.txt
+/copy:Levels/A_level1.txt
+

@@ -26,9 +26,9 @@ namespace MonoGame2D.Game
         {
             get { return _content; }
         }
-        ContentManager _content;
+        private ContentManager _content;
 
-        SpriteBatch _spriteBatch;
+        private SpriteBatch _spriteBatch;
         private int _baseScreenWidth;
         private int _baseScreenHeight;
 
@@ -41,6 +41,8 @@ namespace MonoGame2D.Game
         private Rectangle _recBackground;
         private Rectangle _recPlay;
         private Rectangle _recOptions;
+
+
 
         public Menu(IServiceProvider serviceProvider, SpriteBatch spriteBatch, Vector2 baseScreenSize)
         {
@@ -56,21 +58,22 @@ namespace MonoGame2D.Game
             LoadTextures();
         }
 
-        public void HandleInput(int x, int y, bool isInputPressed)
+        public GameState HandleInput(int x, int y, bool isInputPressed)
         {
             if (isInputPressed)
             {
                 if (_recPlay.Contains(x, y))
                 {
                     OnClick();
-                    return;
+                    return GameState.Game;
                 }  
                 if (_recOptions.Contains(x, y))
                 {
                     OnClick();
-                    return;
+                    return GameState.Options;
                 }
             }
+            return GameState.Menu;
         }
 
         private void OnClick()
