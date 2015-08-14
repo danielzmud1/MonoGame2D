@@ -46,6 +46,12 @@
 /processorParam:TextureFormat=Color
 /build:Menu/ButtonPlay.png
 
+#begin Levels/A1_level_1.txt
+/copy:Levels/A1_level_1.txt
+
+#begin Levels/A1_level_2.txt
+/copy:Levels/A1_level_2.txt
+
 #begin Tiles/A_Block1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -57,6 +63,47 @@
 /processorParam:TextureFormat=Color
 /build:Tiles/A_Block1.png
 
-#begin Levels/A_level1.txt
-/copy:Levels/A_level1.txt
+#begin Tiles/A_Busches1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:Tiles/A_Busches1.png
+
+#begin Tiles/A_Rock1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:Tiles/A_Rock1.png
+
+#begin Tiles/A_Rock2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:Tiles/A_Rock2.png
+
+#begin Tiles/A_Wood1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:Tiles/A_Wood1.png
 
