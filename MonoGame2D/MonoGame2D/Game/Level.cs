@@ -37,9 +37,10 @@ namespace MonoGame2D.Game
         
         
 
-        public int Width { get { return _tiles1.GetLength(0); } }
-        public int Height { get { return _tiles1.GetLength(1); } }
+        //public int Width { get { return _tiles1.GetLength(0); } }
+        //public int Height { get { return _tiles1.GetLength(1); } }
 
+   
         
 
         public Level(IServiceProvider serviceProvider, SpriteBatch spriteBatch, Vector2 baseScreenSize)
@@ -159,7 +160,6 @@ namespace MonoGame2D.Game
         {
             DrawTiles(_tiles1);
             DrawTiles(_tiles2);
-        
         }
 
         private void DrawTiles(Tile[,] tiles)
