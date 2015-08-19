@@ -38,8 +38,6 @@ namespace MonoGame2D.Game
             Texture = texture;
             Collision  = collision;
         }
-
-    
     
     }
 }

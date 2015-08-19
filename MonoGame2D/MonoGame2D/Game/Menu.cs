@@ -20,8 +20,6 @@ namespace MonoGame2D.Game
 {
     class Menu
     {
-        
-        
         public ContentManager Content
         {
             get { return _content; }
@@ -60,7 +58,7 @@ namespace MonoGame2D.Game
 
         public GameState HandleInput(int x, int y, bool isInputPressed)
         {
-            if (isInputPressed)
+            if (isInputPressed  == true)
             {
                 if (_recPlay.Contains(x, y))
                 {
@@ -94,8 +92,6 @@ namespace MonoGame2D.Game
             _spriteBatch.Draw(_buttonPlay, _recPlay, Color.White);
             _spriteBatch.Draw(_buttonOptions, _recOptions, Color.White);
         }
-
- 
 
     }
 }
