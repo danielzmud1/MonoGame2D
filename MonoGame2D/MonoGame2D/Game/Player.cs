@@ -27,6 +27,7 @@ namespace MonoGame2D.Game
         private int _baseScreenWidth;
         private int _baseScreenHeight;
         private GameTime _gameTime;
+        private HelperStruct _helperStruct;
 
         private Animation _walkDown;
         private Animation _walkUp;
@@ -39,6 +40,7 @@ namespace MonoGame2D.Game
         private Animation _standRight;
 
         private Animation _currentAnimation;
+        public bool IsAnimationContinue { get { return _isAnimationContinue; } }
         private bool _isAnimationContinue = false;
 
         public const int Width = 80;
@@ -70,12 +72,23 @@ namespace MonoGame2D.Game
 			set;
 		}
 
-        public Player(IServiceProvider serviceProvider, SpriteBatch spriteBatch, Vector2 baseScreenSize)
+        public int PlayerPositionInMapX { get { return _playerPositionInMapX; } set { _playerPositionInMapX = value; } }
+        private int _playerPositionInMapX;
+        public int PlayerPositionInMapY { get { return _playerPositionInMapY; } set { _playerPositionInMapY = value; } }
+        private int _playerPositionInMapY;
+        public int PlayerPositionInMapPreX { get { return _playerPositionInMapPreX; } set { _playerPositionInMapPreX = value; } }
+        private int _playerPositionInMapPreX;
+        public int PlayerPositionInMapPreY { get { return _playerPositionInMapPreY; } set { _playerPositionInMapPreY = value; } }
+        private int _playerPositionInMapPreY;
+
+        public Player(IServiceProvider serviceProvider, SpriteBatch spriteBatch, Vector2 baseScreenSize, HelperStruct helperStruct)
         {
             _content = new ContentManager(serviceProvider, "Content");
             _spriteBatch = spriteBatch;
             _baseScreenWidth = (int)baseScreenSize.X;
             _baseScreenHeight = (int)baseScreenSize.Y;
+
+            _helperStruct = helperStruct;
   
 			if (_characterTexture == null)
                 _characterTexture = _content.Load<Texture2D>("Sprites/Player/Player");
@@ -139,9 +152,6 @@ namespace MonoGame2D.Game
 
             _currentAnimation = new Animation();
             _currentAnimation = _walkRight;
-
-            X = 160.0f;
-            Y = 160.0f;
 		}
 
 		public void Draw()
@@ -176,17 +186,19 @@ namespace MonoGame2D.Game
             {
                 desiredVelocity.Normalize();
                 Vector2 desiredSpeedClose;
-                desiredSpeedClose.X = (1 * howCloseDestinationTileX);
-                desiredSpeedClose.Y = (1 * howCloseDestinationTileY);
+                desiredSpeedClose.X = (8 * howCloseDestinationTileX);
+                desiredSpeedClose.Y = (8 * howCloseDestinationTileY);
                 desiredVelocity *= desiredSpeedClose;
             }
 
             return desiredVelocity;
         }
 
-
         internal void WalkAlongPath(System.Collections.Generic.List<PlayerSteps> listSteps, int _numberAvaliableSteps)
         {
+            //int aa = 0;
+            //int bb = 0;
+
             _isPlayerInMove = true;
             _positionX = (int)Math.Floor((double)X);
             _positionY = (int)Math.Floor((double)Y);
@@ -206,41 +218,65 @@ namespace MonoGame2D.Game
                         _currentAnimation = _walkRight;
                         _positionDestinationX = _positionX + Tile.Width;
                         _positionDestinationY = _positionY;
+                        _playerPositionInMapX += Tile.Width;
+                        //aa += Tile.Width;
                         break;
                     case PlayerSteps.Left:
                         _currentAnimation = _walkLeft;
                         _positionDestinationX = _positionX - Tile.Width;
                         _positionDestinationY = _positionY;
+                        _playerPositionInMapX -= Tile.Width;
+                        //aa -= Tile.Width;
                         break;
                     case PlayerSteps.Up:
                         _currentAnimation = _walkUp;
                         _positionDestinationX = _positionX;
                         _positionDestinationY = _positionY - Tile.Width;
+                        _playerPositionInMapY -= Tile.Height;
+                       // bb -= Tile.Height;
                         break;
                     case PlayerSteps.Down:
                         _currentAnimation = _walkDown;
                         _positionDestinationX = _positionX;
                         _positionDestinationY = _positionY + Tile.Width;
+                        _playerPositionInMapY += Tile.Height;
+                        //bb += Tile.Height;
                         break;
                     case PlayerSteps.CrossRightUp:
                         _currentAnimation = _walkRight;
                         _positionDestinationX = _positionX + Tile.Width;
-                        _positionDestinationY = _positionY - Tile.Width;
+                        _positionDestinationY = _positionY - Tile.Height;
+                        _playerPositionInMapX += Tile.Width;
+                        _playerPositionInMapY -= Tile.Height;
+                        //aa += Tile.Width;
+                       // bb -= Tile.Height;
                         break;
                     case PlayerSteps.CrossRightDown:
                         _currentAnimation = _walkRight;
                         _positionDestinationX = _positionX + Tile.Width;
                         _positionDestinationY = _positionY + Tile.Width;
+                        _playerPositionInMapX += Tile.Width;
+                        _playerPositionInMapY += Tile.Height;
+                       // aa += Tile.Width;
+                       // bb += Tile.Height;
                         break;
                     case PlayerSteps.CrossLeftUp:
                         _currentAnimation = _walkLeft;
                         _positionDestinationX = _positionX - Tile.Width;
                         _positionDestinationY = _positionY - Tile.Width;
+                        _playerPositionInMapX -= Tile.Width;
+                        _playerPositionInMapY -= Tile.Height;
+                       // aa -= Tile.Width;
+                       // bb -= Tile.Height;
                         break;
                     case PlayerSteps.CrossLeftDown:
                         _currentAnimation = _walkLeft;
                         _positionDestinationX = _positionX - Tile.Width;
-                        _positionDestinationY = _positionY + Tile.Width;
+                        _positionDestinationY = _positionY + Tile.Height;
+                        _playerPositionInMapX -= Tile.Width;
+                        _playerPositionInMapY += Tile.Height;
+                        //aa -= Tile.Width;
+                       // bb += Tile.Height;
                         break;
                     case PlayerSteps.None:
                         _currentAnimation = _standDown;
@@ -256,6 +292,24 @@ namespace MonoGame2D.Game
                 {
                     X = roundToTileSize((int)X, Tile.Width, 5);
                     Y = roundToTileSize((int)Y, Tile.Width, 5);
+
+                    if (!_helperStruct.isPlayerStartX && !_helperStruct.isPlayerEndX)
+                    {
+                        X = (_helperStruct.NumberOfTilesWidth / 2) * Tile.Width;
+                        _positionDestinationX = (int)X;
+                        //_helperStruct.isPlayerMoveRight = true;
+                    }
+
+                    if (!_helperStruct.isPlayerStartY && !_helperStruct.isPlayerEndY)
+                    {
+                        Y = (_helperStruct.NumberOfTilesHeight / 2) * Tile.Height;
+                        _positionDestinationY = (int)Y;
+                        //_helperStruct.isPlayerMoveDown = true;
+                    }
+
+                    _playerPositionInMapPreX = _playerPositionInMapX;
+                    _playerPositionInMapPreY = _playerPositionInMapY;
+
                     Draw();
 
                     _stepIndex++;
@@ -264,6 +318,10 @@ namespace MonoGame2D.Game
 
             if (_isPlayerInMove)
             {
+
+                //_playerPositionInMapX += aa;
+                //_playerPositionInMapY += bb;
+
                 WalkTo(_gameTime, _positionDestinationX, _positionDestinationY);
             }
             else
